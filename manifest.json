@@ -1,0 +1,133 @@
+{
+    "schema":  "1.0",
+    "details":  {
+                    "displayName":  "Schedule FollowUp email",
+                    "description":  "",
+                    "createdTime":  "2026-07-14T01:33:57.1777885Z",
+                    "packageTelemetryId":  "00000000-0000-0000-0000-000000000000",
+                    "creator":  "Public Portfolio Sample",
+                    "sourceEnvironment":  "Public Portfolio Sample"
+                },
+    "resources":  {
+                      "9dd58b0f-f4fe-4c86-9eb7-cddcfabe9f7a":  {
+                                                                   "type":  "Microsoft.Flow/flows",
+                                                                   "suggestedCreationType":  "Update",
+                                                                   "creationType":  "Existing, New, Update",
+                                                                   "details":  {
+                                                                                   "displayName":  "Service Quote Follow-Up Drafts"
+                                                                               },
+                                                                   "configurableBy":  "User",
+                                                                   "hierarchy":  "Root",
+                                                                   "dependsOn":  [
+                                                                                     "143663db-feeb-4381-a3e6-d6b3f0278bd4",
+                                                                                     "ec8bdab0-e8e0-4bb8-85fe-2b6671331050",
+                                                                                     "044fb30d-588b-41e4-857f-fc14ac53d6f6",
+                                                                                     "7188d72c-e011-45cc-9f09-de2f16b7b886",
+                                                                                     "4a637df4-c526-402e-ae28-faea14f67e05",
+                                                                                     "49aa950b-bf79-4b17-81d9-80c649eeb685",
+                                                                                     "ae97638b-f9d7-42d7-8602-cd604309a300"
+                                                                                 ]
+                                                               },
+                      "143663db-feeb-4381-a3e6-d6b3f0278bd4":  {
+                                                                   "id":  "/providers/Microsoft.PowerApps/apis/shared_excelonlinebusiness",
+                                                                   "name":  "shared_excelonlinebusiness",
+                                                                   "type":  "Microsoft.PowerApps/apis",
+                                                                   "suggestedCreationType":  "Existing",
+                                                                   "details":  {
+                                                                                   "displayName":  "Excel Online (Business)",
+                                                                                   "iconUri":  "https://static.powerapps.com/resource/ppcr/releases/v1.0.1817/1.0.1817.4778/excelonlinebusiness/icon.png"
+                                                                               },
+                                                                   "configurableBy":  "System",
+                                                                   "hierarchy":  "Child",
+                                                                   "dependsOn":  [
+
+                                                                                 ]
+                                                               },
+                      "ec8bdab0-e8e0-4bb8-85fe-2b6671331050":  {
+                                                                   "type":  "Microsoft.PowerApps/apis/connections",
+                                                                   "suggestedCreationType":  "Existing",
+                                                                   "creationType":  "Existing",
+                                                                   "details":  {
+                                                                                   "displayName":  "contact3@example.com",
+                                                                                   "iconUri":  "https://static.powerapps.com/resource/ppcr/releases/v1.0.1817/1.0.1817.4778/excelonlinebusiness/icon.png"
+                                                                               },
+                                                                   "configurableBy":  "User",
+                                                                   "hierarchy":  "Child",
+                                                                   "dependsOn":  [
+                                                                                     "143663db-feeb-4381-a3e6-d6b3f0278bd4"
+                                                                                 ]
+                                                               },
+                      "044fb30d-588b-41e4-857f-fc14ac53d6f6":  {
+                                                                   "id":  "/providers/Microsoft.PowerApps/apis/shared_office365",
+                                                                   "name":  "shared_office365",
+                                                                   "type":  "Microsoft.PowerApps/apis",
+                                                                   "suggestedCreationType":  "Existing",
+                                                                   "details":  {
+                                                                                   "displayName":  "Office 365 Outlook",
+                                                                                   "iconUri":  "https://static.powerapps.com/resource/ppcr/releases/v1.0.1819/1.0.1819.4795/office365/icon.png"
+                                                                               },
+                                                                   "configurableBy":  "System",
+                                                                   "hierarchy":  "Child",
+                                                                   "dependsOn":  [
+
+                                                                                 ]
+                                                               },
+                      "7188d72c-e011-45cc-9f09-de2f16b7b886":  {
+                                                                   "type":  "Microsoft.PowerApps/apis/connections",
+                                                                   "suggestedCreationType":  "Existing",
+                                                                   "creationType":  "Existing",
+                                                                   "details":  {
+                                                                                   "displayName":  "contact2@example.com",
+                                                                                   "iconUri":  "https://static.powerapps.com/resource/ppcr/releases/v1.0.1819/1.0.1819.4795/office365/icon.png"
+                                                                               },
+                                                                   "configurableBy":  "User",
+                                                                   "hierarchy":  "Child",
+                                                                   "dependsOn":  [
+                                                                                     "044fb30d-588b-41e4-857f-fc14ac53d6f6"
+                                                                                 ]
+                                                               },
+                      "4a637df4-c526-402e-ae28-faea14f67e05":  {
+                                                                   "id":  "/providers/Microsoft.PowerApps/apis/shared_teams",
+                                                                   "name":  "shared_teams",
+                                                                   "type":  "Microsoft.PowerApps/apis",
+                                                                   "suggestedCreationType":  "Existing",
+                                                                   "details":  {
+                                                                                   "displayName":  "Microsoft Teams",
+                                                                                   "iconUri":  "https://static.powerapps.com/resource/ppcr/releases/v1.0.1818/1.0.1818.4788/teams/icon.png"
+                                                                               },
+                                                                   "configurableBy":  "System",
+                                                                   "hierarchy":  "Child",
+                                                                   "dependsOn":  [
+
+                                                                                 ]
+                                                               },
+                      "49aa950b-bf79-4b17-81d9-80c649eeb685":  {
+                                                                   "type":  "Microsoft.PowerApps/apis/connections",
+                                                                   "suggestedCreationType":  "Existing",
+                                                                   "creationType":  "Existing",
+                                                                   "details":  {
+                                                                                   "displayName":  "contact3@example.com",
+                                                                                   "iconUri":  "https://static.powerapps.com/resource/ppcr/releases/v1.0.1818/1.0.1818.4788/teams/icon.png"
+                                                                               },
+                                                                   "configurableBy":  "User",
+                                                                   "hierarchy":  "Child",
+                                                                   "dependsOn":  [
+                                                                                     "4a637df4-c526-402e-ae28-faea14f67e05"
+                                                                                 ]
+                                                               },
+                      "ae97638b-f9d7-42d7-8602-cd604309a300":  {
+                                                                   "type":  "Microsoft.PowerApps/apis/connections",
+                                                                   "suggestedCreationType":  "Existing",
+                                                                   "creationType":  "Existing",
+                                                                   "details":  {
+                                                                                   "displayName":  "contact3@example.com",
+                                                                                   "iconUri":  "https://static.powerapps.com/resource/ppcr/releases/v1.0.1819/1.0.1819.4795/office365/icon.png"
+                                                                               },
+                                                                   "configurableBy":  "User",
+                                                                   "hierarchy":  "Child",
+                                                                   "dependsOn":  [
+                                                                                     "044fb30d-588b-41e4-857f-fc14ac53d6f6"
+                                                                                 ]
+                                                               }
+                  }
+}
