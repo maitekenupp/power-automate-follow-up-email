@@ -1,0 +1,485 @@
+{
+    "name":  "0b4f5039-f4aa-421c-832b-4fef20f58e60",
+    "id":  "/providers/Microsoft.Flow/flows/0b4f5039-f4aa-421c-832b-4fef20f58e60",
+    "type":  "Microsoft.Flow/flows",
+    "properties":  {
+                       "apiId":  "/providers/Microsoft.PowerApps/apis/shared_logicflows",
+                       "displayName":  "Service Quote Follow-Up Drafts",
+                       "definition":  {
+                                          "metadata":  {
+                                                           "workflowEntityId":  null,
+                                                           "processAdvisorMetadata":  null,
+                                                           "flowChargedByPaygo":  null,
+                                                           "flowclientsuspensionreason":  "None",
+                                                           "flowclientsuspensiontime":  null,
+                                                           "flowclientsuspensionreasondetails":  null,
+                                                           "creator":  {
+                                                                           "id":  "74519c16-627c-4a46-8d70-2428c91229da",
+                                                                           "type":  "User",
+                                                                           "tenantId":  "d459539a-cb3c-48e6-b80e-acda54fe6ead"
+                                                                       },
+                                                           "provisioningMethod":  "FromDefinition",
+                                                           "failureAlertSubscription":  true,
+                                                           "clientLastModifiedTime":  "2026-07-06T17:04:02.9564566Z",
+                                                           "connectionKeySavedTimeKey":  "2026-07-06T17:04:02.9564566Z",
+                                                           "creationSource":  null,
+                                                           "modifiedSources":  "Portal"
+                                                       },
+                                          "$schema":  "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                                          "contentVersion":  "undefined",
+                                          "parameters":  {
+                                                             "$authentication":  {
+                                                                                     "defaultValue":  {
+
+                                                                                                      },
+                                                                                     "type":  "SecureObject"
+                                                                                 },
+                                                             "$connections":  {
+                                                                                  "defaultValue":  {
+
+                                                                                                   },
+                                                                                  "type":  "Object"
+                                                                              }
+                                                         },
+                                          "triggers":  {
+                                                           "Recurrence":  {
+                                                                              "recurrence":  {
+                                                                                                 "frequency":  "Week",
+                                                                                                 "interval":  1,
+                                                                                                 "startTime":  "2026-06-17T17:00:00.000Z",
+                                                                                                 "schedule":  {
+                                                                                                                  "weekDays":  [
+                                                                                                                                   "Monday"
+                                                                                                                               ]
+                                                                                                              }
+                                                                                             },
+                                                                              "evaluatedRecurrence":  {
+                                                                                                          "frequency":  "Week",
+                                                                                                          "interval":  1,
+                                                                                                          "startTime":  "2026-06-17T17:00:00.000Z",
+                                                                                                          "schedule":  {
+                                                                                                                           "weekDays":  [
+                                                                                                                                            "Monday"
+                                                                                                                                        ]
+                                                                                                                       }
+                                                                                                      },
+                                                                              "metadata":  {
+                                                                                               "operationMetadataId":  "61d322e7-2266-451d-92fb-73e111f5f82d"
+                                                                                           },
+                                                                              "type":  "Recurrence"
+                                                                          }
+                                                       },
+                                          "actions":  {
+                                                          "List_rows_present_in_a_table":  {
+                                                                                               "runAfter":  {
+
+                                                                                                            },
+                                                                                               "metadata":  {
+                                                                                                                "operationMetadataId":  "a6a7647e-0a10-42db-b1b2-fff17e8de3b6",
+                                                                                                                "tableId":  "{E6B9253E-7D4F-4D41-9498-5D20C0B6A41C}"
+                                                                                                            },
+                                                                                               "type":  "OpenApiConnection",
+                                                                                               "inputs":  {
+                                                                                                              "parameters":  {
+                                                                                                                                 "source":  "sites/example.sharepoint.com,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000",
+                                                                                                                                 "drive":  "DRIVE_ID_PLACEHOLDER",
+                                                                                                                                 "file":  "FILE_ID_PLACEHOLDER",
+                                                                                                                                 "table":  "TABLE_ID_PLACEHOLDER"
+                                                                                                                             },
+                                                                                                              "host":  {
+                                                                                                                           "apiId":  "/providers/Microsoft.PowerApps/apis/shared_excelonlinebusiness",
+                                                                                                                           "connectionName":  "shared_excelonlinebusiness",
+                                                                                                                           "operationId":  "GetItems"
+                                                                                                                       },
+                                                                                                              "authentication":  "@parameters(\u0027$authentication\u0027)"
+                                                                                                          }
+                                                                                           },
+                                                          "Apply_to_each":  {
+                                                                                "foreach":  "@outputs(\u0027List_rows_present_in_a_table\u0027)?[\u0027body/value\u0027]",
+                                                                                "actions":  {
+                                                                                                "Condition":  {
+                                                                                                                  "actions":  {
+                                                                                                                                  "Increment_Jobs":  {
+                                                                                                                                                         "metadata":  {
+                                                                                                                                                                          "operationMetadataId":  "531bedce-d9be-446a-a61b-fa483000bde4"
+                                                                                                                                                                      },
+                                                                                                                                                         "type":  "IncrementVariable",
+                                                                                                                                                         "inputs":  {
+                                                                                                                                                                        "name":  "JobsNeedFollowUpCount",
+                                                                                                                                                                        "value":  1
+                                                                                                                                                                    }
+                                                                                                                                                     },
+                                                                                                                                  "Draft_an_email_message":  {
+                                                                                                                                                                 "runAfter":  {
+                                                                                                                                                                                  "Increment_Jobs":  [
+                                                                                                                                                                                                         "Succeeded"
+                                                                                                                                                                                                     ]
+                                                                                                                                                                              },
+                                                                                                                                                                 "type":  "OpenApiConnection",
+                                                                                                                                                                 "inputs":  {
+                                                                                                                                                                                "parameters":  {
+                                                                                                                                                                                                   "draftMessage/To":  "@items(\u0027Apply_to_each\u0027)?[\u0027Email\u0027]",
+                                                                                                                                                                                                   "draftMessage/Subject":  "@concat(\u0027Follow up on Estimate \u0027, items(\u0027Apply_to_each\u0027)?[\u0027UID\u0027])",
+                                                                                                                                                                                                   "draftMessage/Body":  "\u003cp\u003eHello,\u003c/p\u003e\n\n\u003cp\u003eThis is Jake with Example Company.\u003c/p\u003e\n\n\u003cp\u003eJust wanted to follow up on the quote we recently sent and see if you had any questions or needed anything from us.\u003c/p\u003e\n\n\u003cp\u003eWe\u0027re happy to help and would appreciate any update when you have a chance.\u003c/p\u003e\n\n\u003cp\u003eThank you,\u003c/p\u003e\n\n\u003cp\u003e\n\u003cstrong\u003e\u003cspan style=\"color:#3B3838;\"\u003eAlex Morgan\u003c/span\u003e\u003c/strong\u003e\u003cbr\u003e\n\u003cstrong\u003e\u003cspan style=\"color:#3B3838;\"\u003eService Project Manager/Estimator\u003c/span\u003e\u003c/strong\u003e\u003cbr\u003e\n\u003cspan style=\"color:#1F4E79;\"\u003eExample Company\u003c/span\u003e\u003cbr\u003e\n\u003cspan style=\"color:#1F4E79;\"\u003e123 Example Street\u003c/span\u003e\u003cbr\u003e\n\u003cspan style=\"color:#1F4E79;\"\u003eExample City, ST 00000\u003c/span\u003e\u003cbr\u003e\n\u003cspan style=\"color:#1F4E79;\"\u003ep: (555) 010-0000 EXT 100\u003c/span\u003e\u003cbr\u003e\n\u003cspan style=\"color:#1F4E79;\"\u003ec: (555) 010-0000\u003c/span\u003e\u003cbr\u003e\n\u003cspan style=\"color:#1F4E79;\"\u003ee: \u003ca href=\"mailto:contact2@example.com\" style=\"color:#1F4E79;text-decoration:none;\"\u003econtact2@example.com\u003c/a\u003e\u003c/span\u003e\u003cbr\u003e\n\u003cspan style=\"color:#1F4E79;\"\u003ew: \u003ca href=\"https://www.example.com\" style=\"color:#1F4E79;text-decoration:none;\"\u003ewww.example.com\u003c/a\u003e\u003c/span\u003e\u003cbr\u003e\n\u003cspan style=\"color:#1F4E79;\"\u003eLicense #000000\u003c/span\u003e\n\u003c/p\u003e\n\n\u003cp\u003e\n\u003cimg src=\"https://www.example.com/logo.png\" width=\"180\" alt=\"Example Company Logo\"\u003e\n\u003c/p\u003e",
+                                                                                                                                                                                                   "draftMessage/Cc":  "contact4@example.com;contact1@example.com",
+                                                                                                                                                                                                   "draftMessage/Importance":  "Normal"
+                                                                                                                                                                                               },
+                                                                                                                                                                                "host":  {
+                                                                                                                                                                                             "apiId":  "/providers/Microsoft.PowerApps/apis/shared_office365",
+                                                                                                                                                                                             "connectionName":  "shared_office365-1",
+                                                                                                                                                                                             "operationId":  "DraftEmail"
+                                                                                                                                                                                         },
+                                                                                                                                                                                "authentication":  "@parameters(\u0027$authentication\u0027)"
+                                                                                                                                                                            }
+                                                                                                                                                             },
+                                                                                                                                  "Increment_draft":  {
+                                                                                                                                                          "runAfter":  {
+                                                                                                                                                                           "Append_to_array_variable":  [
+                                                                                                                                                                                                            "Succeeded"
+                                                                                                                                                                                                        ]
+                                                                                                                                                                       },
+                                                                                                                                                          "type":  "IncrementVariable",
+                                                                                                                                                          "inputs":  {
+                                                                                                                                                                         "name":  "DraftCount",
+                                                                                                                                                                         "value":  1
+                                                                                                                                                                     }
+                                                                                                                                                      },
+                                                                                                                                  "Append_to_array_variable":  {
+                                                                                                                                                                   "runAfter":  {
+                                                                                                                                                                                    "Draft_an_email_message":  [
+                                                                                                                                                                                                                   "Succeeded"
+                                                                                                                                                                                                               ]
+                                                                                                                                                                                },
+                                                                                                                                                                   "type":  "AppendToArrayVariable",
+                                                                                                                                                                   "inputs":  {
+                                                                                                                                                                                  "name":  "DraftIDs",
+                                                                                                                                                                                  "value":  "@body(\u0027Draft_an_email_message\u0027)?[\u0027id\u0027]"
+                                                                                                                                                                              }
+                                                                                                                                                               }
+                                                                                                                              },
+                                                                                                                  "else":  {
+                                                                                                                               "actions":  {
+
+                                                                                                                                           }
+                                                                                                                           },
+                                                                                                                  "expression":  {
+                                                                                                                                     "and":  [
+                                                                                                                                                 {
+                                                                                                                                                     "equals":  [
+                                                                                                                                                                    "@items(\u0027Apply_to_each\u0027)?[\u0027PROGRESS\u0027]",
+                                                                                                                                                                    "2.Quote Log"
+                                                                                                                                                                ]
+                                                                                                                                                 },
+                                                                                                                                                 {
+                                                                                                                                                     "or":  [
+                                                                                                                                                                {
+                                                                                                                                                                    "equals":  [
+                                                                                                                                                                                   "@items(\u0027Apply_to_each\u0027)?[\u0027Response Time\u0027]",
+                                                                                                                                                                                   ""
+                                                                                                                                                                               ]
+                                                                                                                                                                },
+                                                                                                                                                                {
+                                                                                                                                                                    "greaterOrEquals":  [
+                                                                                                                                                                                            "@int(items(\u0027Apply_to_each\u0027)?[\u0027Response Time\u0027])",
+                                                                                                                                                                                            7
+                                                                                                                                                                                        ]
+                                                                                                                                                                }
+                                                                                                                                                            ]
+                                                                                                                                                 },
+                                                                                                                                                 {
+                                                                                                                                                     "or":  [
+                                                                                                                                                                {
+                                                                                                                                                                    "equals":  [
+                                                                                                                                                                                   "@items(\u0027Apply_to_each\u0027)?[\u0027Last Follow-Up Date\u0027]",
+                                                                                                                                                                                   ""
+                                                                                                                                                                               ]
+                                                                                                                                                                },
+                                                                                                                                                                {
+                                                                                                                                                                    "lessOrEquals":  [
+                                                                                                                                                                                         "@int(items(\u0027Apply_to_each\u0027)?[\u0027Last Follow-Up Date\u0027])",
+                                                                                                                                                                                         "@sub(\r\n  add(\r\n    div(sub(ticks(utcNow()),ticks(\u00271899-12-30\u0027)),864000000000),\r\n    0\r\n  ),\r\n  7\r\n)"
+                                                                                                                                                                                     ]
+                                                                                                                                                                }
+                                                                                                                                                            ]
+                                                                                                                                                 },
+                                                                                                                                                 {
+                                                                                                                                                     "not":  {
+                                                                                                                                                                 "equals":  [
+                                                                                                                                                                                "@items(\u0027Apply_to_each\u0027)?[\u0027Email\u0027]",
+                                                                                                                                                                                ""
+                                                                                                                                                                            ]
+                                                                                                                                                             }
+                                                                                                                                                 }
+                                                                                                                                             ]
+                                                                                                                                 },
+                                                                                                                  "metadata":  {
+                                                                                                                                   "operationMetadataId":  "54ed2869-536d-46b9-9be3-660b0a9597b0"
+                                                                                                                               },
+                                                                                                                  "type":  "If"
+                                                                                                              }
+                                                                                            },
+                                                                                "runAfter":  {
+                                                                                                 "DraftIDs":  [
+                                                                                                                  "Succeeded"
+                                                                                                              ]
+                                                                                             },
+                                                                                "metadata":  {
+                                                                                                 "operationMetadataId":  "d0d5963d-0cc6-4da9-b995-3200068ca921"
+                                                                                             },
+                                                                                "type":  "Foreach"
+                                                                            },
+                                                          "DraftCount":  {
+                                                                             "runAfter":  {
+                                                                                              "List_rows_present_in_a_table":  [
+                                                                                                                                   "Succeeded"
+                                                                                                                               ]
+                                                                                          },
+                                                                             "metadata":  {
+                                                                                              "operationMetadataId":  "ab970571-f652-487e-96e8-28d9d2c0b3d3"
+                                                                                          },
+                                                                             "type":  "InitializeVariable",
+                                                                             "inputs":  {
+                                                                                            "variables":  [
+                                                                                                              {
+                                                                                                                  "name":  "DraftCount",
+                                                                                                                  "type":  "integer",
+                                                                                                                  "value":  0
+                                                                                                              }
+                                                                                                          ]
+                                                                                        }
+                                                                         },
+                                                          "JobsNeedFollowUpCount":  {
+                                                                                        "runAfter":  {
+                                                                                                         "DraftCount":  [
+                                                                                                                            "Succeeded"
+                                                                                                                        ]
+                                                                                                     },
+                                                                                        "metadata":  {
+                                                                                                         "operationMetadataId":  "95a0bd7c-dab9-42c8-8bbf-c6673310b791"
+                                                                                                     },
+                                                                                        "type":  "InitializeVariable",
+                                                                                        "inputs":  {
+                                                                                                       "variables":  [
+                                                                                                                         {
+                                                                                                                             "name":  "JobsNeedFollowUpCount",
+                                                                                                                             "type":  "integer",
+                                                                                                                             "value":  0
+                                                                                                                         }
+                                                                                                                     ]
+                                                                                                   }
+                                                                                    },
+                                                          "DraftIDs":  {
+                                                                           "runAfter":  {
+                                                                                            "JobsNeedFollowUpCount":  [
+                                                                                                                          "Succeeded"
+                                                                                                                      ]
+                                                                                        },
+                                                                           "metadata":  {
+                                                                                            "operationMetadataId":  "114746b1-b4e1-4f0c-a804-e7cd863cbeca"
+                                                                                        },
+                                                                           "type":  "InitializeVariable",
+                                                                           "inputs":  {
+                                                                                          "variables":  [
+                                                                                                            {
+                                                                                                                "name":  "DraftIDs",
+                                                                                                                "type":  "array"
+                                                                                                            }
+                                                                                                        ]
+                                                                                      }
+                                                                       },
+                                                          "Condition_2":  {
+                                                                              "actions":  {
+                                                                                              "Post_message_in_a_chat_or_channel":  {
+                                                                                                                                        "runAfter":  {
+                                                                                                                                                         "Apply_to_each_1":  [
+                                                                                                                                                                                 "Succeeded"
+                                                                                                                                                                             ]
+                                                                                                                                                     },
+                                                                                                                                        "metadata":  {
+                                                                                                                                                         "operationMetadataId":  "b1026233-4cb7-4cfb-a5dc-ef0f4f99a456"
+                                                                                                                                                     },
+                                                                                                                                        "type":  "OpenApiConnection",
+                                                                                                                                        "inputs":  {
+                                                                                                                                                       "parameters":  {
+                                                                                                                                                                          "poster":  "Flow bot",
+                                                                                                                                                                          "location":  "Group chat",
+                                                                                                                                                                          "body/recipient":  "19:cdcdf0c2c8a64908990ac728bb5e1205@thread.v2",
+                                                                                                                                                                          "body/messageBody":  "\u003cp class=\"editor-paragraph\"\u003eÃ°Å¸â€œÂ Service Quote Follow-Up Update\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003e\u003cbr\u003e\u003c/strong\u003e\u003c/b\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eJobs found needing follow-up\u003c/strong\u003e\u003c/b\u003e: @{variables(\u0027JobsNeedFollowUpCount\u0027)}\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eDrafts created:\u003c/strong\u003e\u003c/b\u003e @{variables(\u0027DraftCount\u0027)}\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eApproved by:\u003c/strong\u003e\u003c/b\u003e @{body(\u0027Post_adaptive_card_and_wait_for_a_response\u0027)?[\u0027responder\u0027]?[\u0027displayName\u0027]}\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eUser selected:\u003c/strong\u003e\u003c/b\u003e Send Drafts\u003c/p\u003e\u003cp class=\"editor-paragraph\"\u003e\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eStatus:\u003c/strong\u003e\u003c/b\u003e Approved drafts have been sent. No drafts remain pending review.\u003c/p\u003e"
+                                                                                                                                                                      },
+                                                                                                                                                       "host":  {
+                                                                                                                                                                    "apiId":  "/providers/Microsoft.PowerApps/apis/shared_teams",
+                                                                                                                                                                    "connectionName":  "shared_teams",
+                                                                                                                                                                    "operationId":  "PostMessageToConversation"
+                                                                                                                                                                },
+                                                                                                                                                       "authentication":  "@parameters(\u0027$authentication\u0027)"
+                                                                                                                                                   }
+                                                                                                                                    },
+                                                                                              "Apply_to_each_1":  {
+                                                                                                                      "foreach":  "@variables(\u0027DraftIDs\u0027)",
+                                                                                                                      "actions":  {
+                                                                                                                                      "Increment_Sent":  {
+                                                                                                                                                             "runAfter":  {
+                                                                                                                                                                              "Send_a_Draft_message":  [
+                                                                                                                                                                                                           "Succeeded"
+                                                                                                                                                                                                       ]
+                                                                                                                                                                          },
+                                                                                                                                                             "metadata":  {
+                                                                                                                                                                              "operationMetadataId":  "86d5cf77-daa2-4260-9c30-db827b5bc0b5"
+                                                                                                                                                                          },
+                                                                                                                                                             "type":  "IncrementVariable",
+                                                                                                                                                             "inputs":  {
+                                                                                                                                                                            "name":  "SentCount",
+                                                                                                                                                                            "value":  1
+                                                                                                                                                                        }
+                                                                                                                                                         },
+                                                                                                                                      "Send_a_Draft_message":  {
+                                                                                                                                                                   "type":  "OpenApiConnection",
+                                                                                                                                                                   "inputs":  {
+                                                                                                                                                                                  "parameters":  {
+                                                                                                                                                                                                     "messageId":  "@items(\u0027Apply_to_each_1\u0027)"
+                                                                                                                                                                                                 },
+                                                                                                                                                                                  "host":  {
+                                                                                                                                                                                               "apiId":  "/providers/Microsoft.PowerApps/apis/shared_office365",
+                                                                                                                                                                                               "connectionName":  "shared_office365",
+                                                                                                                                                                                               "operationId":  "SendDraftEmail"
+                                                                                                                                                                                           },
+                                                                                                                                                                                  "authentication":  "@parameters(\u0027$authentication\u0027)"
+                                                                                                                                                                              }
+                                                                                                                                                               }
+                                                                                                                                  },
+                                                                                                                      "metadata":  {
+                                                                                                                                       "operationMetadataId":  "f356abf2-f385-41e4-9b7b-0f1577e17a5d"
+                                                                                                                                   },
+                                                                                                                      "type":  "Foreach"
+                                                                                                                  }
+                                                                                          },
+                                                                              "runAfter":  {
+                                                                                               "SentCount":  [
+                                                                                                                 "Succeeded"
+                                                                                                             ]
+                                                                                           },
+                                                                              "else":  {
+                                                                                           "actions":  {
+                                                                                                           "Post_message_in_a_chat_or_channel_1":  {
+                                                                                                                                                       "metadata":  {
+                                                                                                                                                                        "operationMetadataId":  "27b9d8c7-48e6-443f-9e46-d9e709eb44c9"
+                                                                                                                                                                    },
+                                                                                                                                                       "type":  "OpenApiConnection",
+                                                                                                                                                       "inputs":  {
+                                                                                                                                                                      "parameters":  {
+                                                                                                                                                                                         "poster":  "Flow bot",
+                                                                                                                                                                                         "location":  "Group chat",
+                                                                                                                                                                                         "body/recipient":  "19:cdcdf0c2c8a64908990ac728bb5e1205@thread.v2",
+                                                                                                                                                                                         "body/messageBody":  "\u003cp class=\"editor-paragraph\"\u003eÃ°Å¸â€œÂ Service Quote Follow-Up Update\u003cbr\u003e\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eJobs found needing follow-up:\u003c/strong\u003e\u003c/b\u003e @{variables(\u0027JobsNeedFollowUpCount\u0027)}\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eDrafts created: \u003c/strong\u003e\u003c/b\u003e@{variables(\u0027DraftCount\u0027)}\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eApproved by:\u003c/strong\u003e\u003c/b\u003e @{body(\u0027Post_adaptive_card_and_wait_for_a_response\u0027)?[\u0027responder\u0027]?[\u0027displayName\u0027]}\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eUser selected:\u003c/strong\u003e\u003c/b\u003e Review Later\u003cbr\u003e\u003cbr\u003e\u003cb\u003e\u003cstrong class=\"editor-text-bold\"\u003eStatus: \u003c/strong\u003e\u003c/b\u003eDrafts will remain in Outlook for manual review and sending.\u003c/p\u003e"
+                                                                                                                                                                                     },
+                                                                                                                                                                      "host":  {
+                                                                                                                                                                                   "apiId":  "/providers/Microsoft.PowerApps/apis/shared_teams",
+                                                                                                                                                                                   "connectionName":  "shared_teams",
+                                                                                                                                                                                   "operationId":  "PostMessageToConversation"
+                                                                                                                                                                               },
+                                                                                                                                                                      "authentication":  "@parameters(\u0027$authentication\u0027)"
+                                                                                                                                                                  }
+                                                                                                                                                   }
+                                                                                                       }
+                                                                                       },
+                                                                              "expression":  {
+                                                                                                 "and":  [
+                                                                                                             {
+                                                                                                                 "equals":  [
+                                                                                                                                "@body(\u0027Post_adaptive_card_and_wait_for_a_response\u0027)?[\u0027submitActionId\u0027]",
+                                                                                                                                "Ã¢Å“â€¦ Send Drafts"
+                                                                                                                            ]
+                                                                                                             }
+                                                                                                         ]
+                                                                                             },
+                                                                              "metadata":  {
+                                                                                               "operationMetadataId":  "2bf00786-d420-4ec0-bd1d-0183537bf0b5"
+                                                                                           },
+                                                                              "type":  "If"
+                                                                          },
+                                                          "SentCount":  {
+                                                                            "runAfter":  {
+                                                                                             "Post_adaptive_card_and_wait_for_a_response":  [
+                                                                                                                                                "Succeeded"
+                                                                                                                                            ]
+                                                                                         },
+                                                                            "metadata":  {
+                                                                                             "operationMetadataId":  "a01620c6-da1d-47a4-80a8-e0036ee15c8b"
+                                                                                         },
+                                                                            "type":  "InitializeVariable",
+                                                                            "inputs":  {
+                                                                                           "variables":  [
+                                                                                                             {
+                                                                                                                 "name":  "SentCount",
+                                                                                                                 "type":  "integer",
+                                                                                                                 "value":  0
+                                                                                                             }
+                                                                                                         ]
+                                                                                       }
+                                                                        },
+                                                          "Post_adaptive_card_and_wait_for_a_response":  {
+                                                                                                             "runAfter":  {
+                                                                                                                              "Apply_to_each":  [
+                                                                                                                                                    "Succeeded"
+                                                                                                                                                ]
+                                                                                                                          },
+                                                                                                             "metadata":  {
+                                                                                                                              "operationMetadataId":  "a10b14d7-077e-45e6-b5de-f742d8f31809"
+                                                                                                                          },
+                                                                                                             "type":  "OpenApiConnectionWebhook",
+                                                                                                             "inputs":  {
+                                                                                                                            "parameters":  {
+                                                                                                                                               "poster":  "Flow bot",
+                                                                                                                                               "location":  "Group chat",
+                                                                                                                                               "body/body/messageBody":  "{\n  \"type\": \"AdaptiveCard\",\n  \"version\": \"1.4\",\n  \"body\": [\n    {\n      \"type\": \"TextBlock\",\n      \"text\": \"Ã°Å¸â€œÂ¬ Service Quote Follow-Up Summary\",\n      \"weight\": \"Bolder\",\n      \"size\": \"Medium\"\n    },\n    {\n      \"type\": \"TextBlock\",\n      \"text\": \"Jobs found needing follow-up: @{variables(\u0027JobsNeedFollowUpCount\u0027)}\",\n      \"wrap\": true\n    },\n    {\n      \"type\": \"TextBlock\",\n      \"text\": \"Drafts created: @{variables(\u0027DraftCount\u0027)}\",\n      \"wrap\": true\n    },\n    {\n      \"type\": \"TextBlock\",\n      \"text\": \"Please review your Outlook drafts before sending.\",\n      \"wrap\": true\n    },\n    ],\n  \"actions\": [\n    {\n      \"type\": \"Action.Submit\",\n      \"title\": \"Ã¢Å“â€¦ Send Drafts\",\n      \"data\": {\n        \"response\": \"Approve\"\n      }\n    },\n    {\n      \"type\": \"Action.Submit\",\n      \"title\": \"Ã°Å¸â€œÂ Review Later\",\n      \"data\": {\n        \"response\": \"Reject\"\n      }\n    }\n  ]\n}",
+                                                                                                                                               "body/body/updateMessage":  "Ã¢Å“â€¦ Selection received. Processing...",
+                                                                                                                                               "body/body/recipient/recipient":  "19:cdcdf0c2c8a64908990ac728bb5e1205@thread.v2"
+                                                                                                                                           },
+                                                                                                                            "host":  {
+                                                                                                                                         "apiId":  "/providers/Microsoft.PowerApps/apis/shared_teams",
+                                                                                                                                         "connectionName":  "shared_teams",
+                                                                                                                                         "operationId":  "PostCardAndWaitForResponse"
+                                                                                                                                     },
+                                                                                                                            "authentication":  "@parameters(\u0027$authentication\u0027)"
+                                                                                                                        }
+                                                                                                         }
+                                                      }
+                                      },
+                       "connectionReferences":  {
+                                                    "shared_excelonlinebusiness":  {
+                                                                                       "connectionName":  "shared-excelonlinebu-73ceaae8-d58a-4948-94eb-b357150d8bf0",
+                                                                                       "source":  "Embedded",
+                                                                                       "id":  "/providers/Microsoft.PowerApps/apis/shared_excelonlinebusiness",
+                                                                                       "tier":  "NotSpecified",
+                                                                                       "apiName":  "excelonlinebusiness",
+                                                                                       "isProcessSimpleApiReferenceConversionAlreadyDone":  false
+                                                                                   },
+                                                    "shared_office365-1":  {
+                                                                               "connectionName":  "shared-office365-73b58bca-c2f0-4d23-8d73-b7f6a1ef56f9",
+                                                                               "source":  "Embedded",
+                                                                               "id":  "/providers/Microsoft.PowerApps/apis/shared_office365",
+                                                                               "tier":  "NotSpecified",
+                                                                               "apiName":  "office365",
+                                                                               "isProcessSimpleApiReferenceConversionAlreadyDone":  false
+                                                                           },
+                                                    "shared_teams":  {
+                                                                         "connectionName":  "shared-teams-e1f04060-765d-41d9-9f48-45b183d798b3",
+                                                                         "source":  "Embedded",
+                                                                         "id":  "/providers/Microsoft.PowerApps/apis/shared_teams",
+                                                                         "tier":  "NotSpecified",
+                                                                         "apiName":  "teams",
+                                                                         "isProcessSimpleApiReferenceConversionAlreadyDone":  false
+                                                                     },
+                                                    "shared_office365":  {
+                                                                             "connectionName":  "shared-office365-edb77d82-9202-41b7-813b-233c3154d2ab",
+                                                                             "source":  "Embedded",
+                                                                             "id":  "/providers/Microsoft.PowerApps/apis/shared_office365",
+                                                                             "tier":  "NotSpecified",
+                                                                             "apiName":  "office365",
+                                                                             "isProcessSimpleApiReferenceConversionAlreadyDone":  false
+                                                                         }
+                                                },
+                       "flowFailureAlertSubscribed":  false,
+                       "isManaged":  false
+                   }
+}
