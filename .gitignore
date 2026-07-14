@@ -1,0 +1,10 @@
+# Power Automate export archives and local files
+*.zip
+*.log
+.DS_Store
+Thumbs.db
+
+# Local configuration and secrets
+.env
+.env.*
+*.local
